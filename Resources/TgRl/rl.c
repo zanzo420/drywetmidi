@@ -42,8 +42,6 @@ void CreateTimer(int ms, CFRunLoopTimerCallBack callback)
     tickGeneratorInfo->interval = ms;
 	tickGeneratorInfo->callback = callback;
 
-    *info = tickGeneratorInfo;
-
     pthread_create(&tickGeneratorInfo->thread, NULL, RunLoopThreadRoutine, tickGeneratorInfo);
 
     while (tickGeneratorInfo->active == 0) {}
