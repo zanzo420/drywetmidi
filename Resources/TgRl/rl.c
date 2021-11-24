@@ -15,7 +15,7 @@ void SetPriorityRealtime()
     kern_return_t kr = mach_timebase_info(&timebase);
 
     // Set the thread priority.
-    thread_time_constraint_policy ttcpolicy;
+    struct thread_time_constraint_policy ttcpolicy;
     thread_port_t threadport = pthread_mach_thread_np(pthread_self());
 
     // In ticks. Therefore to convert nanoseconds to ticks multiply by (timebase.denom / timebase.numer).
