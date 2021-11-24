@@ -69,7 +69,8 @@ namespace TestApp
 
         private static void CallbackImpl()
         {
-            _times.Add(_stopwatch.ElapsedMilliseconds);
+            if (_stopwatch.IsRunning)
+                _times.Add(_stopwatch.ElapsedMilliseconds);
         }
 
         private record Result(
