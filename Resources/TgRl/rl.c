@@ -87,9 +87,13 @@ SessionInfo* CreateSession()
 
 void StartTimer(SessionInfo* sessionInfo, int ms, void (*callback)(void))
 {
+	TickGeneratorInfo* tickGeneratorInfo = malloc(sizeof(TickGeneratorInfo));
+
+	tickGeneratorInfo->callback = callback;
+	
 	double interval = (double)ms / 1000.0;
 	
-	CFRunLoopTimerContext context = { 0, data, NULL, NULL, NULL };
+	CFRunLoopTimerContext context = { 0, tickGeneratorInfo, NULL, NULL, NULL };
 	CFRunLoopTimerRef timerRef = CFRunLoopTimerCreate(
 	    NULL,
 		CFAbsoluteTimeGetCurrent() + interval,
