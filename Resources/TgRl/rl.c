@@ -10,6 +10,13 @@ typedef struct
 	void (*callback)(void);
 } TickGeneratorInfo;
 
+typedef struct
+{
+    pthread_t thread;
+    char active;
+	CFRunLoopRef runLoopRef;
+} SessionInfo;
+
 void SetPriorityRealtime()
 {
     mach_timebase_info_data_t timebase;
@@ -34,39 +41,63 @@ void TimerCallBack(CFRunLoopTimerRef timer, void *info)
 	tickGeneratorInfo->callback();
 }
 
-void* RunLoopThreadRoutine(void* data)
+void SessionCallback(CFRunLoopTimerRef timer, void *info)
 {
-    TickGeneratorInfo* tickGeneratorInfo = (TickGeneratorInfo*)data;
+}
 
-    CFRunLoopTimerContext context = { 0, data, NULL, NULL, NULL };
+void* SessionThreadRoutine(void* data)
+{
+    SessionInfo* sessionInfo = (SessionInfo*)data;
+
+    CFRunLoopTimerContext context = { 0, NULL, NULL, NULL, NULL };
 	CFRunLoopTimerRef timerRef = CFRunLoopTimerCreate(
 	    NULL,
-		CFAbsoluteTimeGetCurrent() + 0.001,
-		0.001,
+		CFAbsoluteTimeGetCurrent() + 60,
+		60,
 		0,
 		0,
-		TimerCallBack,
+		SessionCallback,
 		&context);
 
     CFRunLoopRef runLoopRef = CFRunLoopGetCurrent();
 	CFRunLoopAddTimer(runLoopRef, timerRef, kCFRunLoopDefaultMode);
 	
-    tickGeneratorInfo->active = 1;
 	SetPriorityRealtime();
+
+    sessionInfo->active = 1;
+	sessionInfo->runLoopRef = runLoopRef;
 
     CFRunLoopRun();
 
     return NULL;
 }
 
-void CreateTimer(void (*callback)(void))
+SessionInfo* CreateSession()
 {
-	TickGeneratorInfo* tickGeneratorInfo = malloc(sizeof(TickGeneratorInfo));
+	SessionInfo* sessionInfo = malloc(sizeof(SessionInfo));
+	
+	sessionInfo->active = 0;
 
-    tickGeneratorInfo->active = 0;
-	tickGeneratorInfo->callback = callback;
+    pthread_create(&sessionInfo->thread, NULL, SessionThreadRoutine, sessionInfo);
 
-    pthread_create(&tickGeneratorInfo->thread, NULL, RunLoopThreadRoutine, tickGeneratorInfo);
+    while (sessionInfo->active == 0) {}
+	
+	return sessionInfo;
+}
 
-    while (tickGeneratorInfo->active == 0) {}
+void StartTimer(SessionInfo* sessionInfo, int ms, void (*callback)(void))
+{
+	double interval = (double)ms / 1000.0;
+	
+	CFRunLoopTimerContext context = { 0, data, NULL, NULL, NULL };
+	CFRunLoopTimerRef timerRef = CFRunLoopTimerCreate(
+	    NULL,
+		CFAbsoluteTimeGetCurrent() + interval,
+		interval,
+		0,
+		0,
+		TimerCallBack,
+		&context);
+
+	CFRunLoopAddTimer(sessionInfo->runLoopRef, timerRef, kCFRunLoopDefaultMode);
 }
