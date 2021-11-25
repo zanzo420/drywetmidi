@@ -5,8 +5,7 @@
 
 typedef struct
 {
-    pthread_t thread;
-    char active;
+    CFRunLoopTimerRef timerRef;
 	void (*callback)(void);
 } TickGeneratorInfo;
 
@@ -85,7 +84,7 @@ SessionInfo* CreateSession()
 	return sessionInfo;
 }
 
-void StartTimer(SessionInfo* sessionInfo, int ms, void (*callback)(void))
+TickGeneratorInfo* StartTimer(SessionInfo* sessionInfo, int ms, void (*callback)(void))
 {
 	TickGeneratorInfo* tickGeneratorInfo = malloc(sizeof(TickGeneratorInfo));
 
@@ -103,5 +102,13 @@ void StartTimer(SessionInfo* sessionInfo, int ms, void (*callback)(void))
 		TimerCallBack,
 		&context);
 
+    tickGeneratorInfo->timerRef = timerRef;
 	CFRunLoopAddTimer(sessionInfo->runLoopRef, timerRef, kCFRunLoopDefaultMode);
+	
+	return tickGeneratorInfo;
+}
+
+void StopTimer(SessionInfo* sessionInfo, TickGeneratorInfo* tickGeneratorInfo)
+{
+	CFRunLoopRemoveTimer(sessionInfo->runLoopRef, tickGeneratorInfo->timerRef, kCFRunLoopDefaultMode);
 }

@@ -15,7 +15,10 @@ namespace TestApp
         private static extern IntPtr CreateSession();
 
         [DllImport("tgrl")]
-        private static extern void StartTimer(IntPtr sessionInfo, int ms, Callback callback);
+        private static extern IntPtr StartTimer(IntPtr sessionInfo, int ms, Callback callback);
+
+        [DllImport("tgrl")]
+        private static extern void StopTimer(IntPtr sessionInfo, IntPtr tickGeneratorInfo);
 
         private static Callback _callback;
         private static Stopwatch _stopwatch;
@@ -29,11 +32,12 @@ namespace TestApp
             _stopwatch = new Stopwatch();
 
             var si = CreateSession();
-            StartTimer(si, 1, _callback);
+            var tgi = StartTimer(si, 1, _callback);
             _stopwatch.Start();
 
             Thread.Sleep(MeasurementDuration);
 
+            StopTimer(si, tgi);
             _stopwatch.Stop();
 
             var deltas = new List<long>();
