@@ -17,7 +17,8 @@ namespace Common
             double MaxPercent,
             double Average,
             double GoodPercent,
-            double BadPercent);
+            double AboveGood,
+            double BelowGood);
 
         private const double GoodAreaPercents = 10.0;
         private static readonly TimeSpan MeasurementDuration = TimeSpan.FromSeconds(30);
@@ -32,16 +33,16 @@ namespace Common
                 var result = CheckInterval(timer, intervalMs);
 
                 Console.WriteLine($"Results on {result.TimesCount} times:");
-                Console.WriteLine($"    first   = {result.First}");
-                Console.WriteLine($"    min     = {result.Min} ({result.MinPercent:0.##} %)");
-                Console.WriteLine($"    max     = {result.Max} ({result.MaxPercent:0.##} %)");
-                Console.WriteLine($"    average = {result.Average:0.##}");
-                Console.WriteLine($"    good    = {result.GoodPercent:0.##} %");
-                Console.WriteLine($"    bad     = {result.BadPercent:0.##} %");
+                Console.WriteLine($"    first      = {result.First}");
+                Console.WriteLine($"    min        = {result.Min} ({result.MinPercent:0.##} %)");
+                Console.WriteLine($"    max        = {result.Max} ({result.MaxPercent:0.##} %)");
+                Console.WriteLine($"    average    = {result.Average:0.##}");
+                Console.WriteLine($"    good       = {result.GoodPercent:0.##} %");
+                Console.WriteLine($"    above good = {result.AboveGood:0.##} %");
+                Console.WriteLine($"    below good = {result.BelowGood:0.##} %");
             }
 
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+            Console.WriteLine("All done.");
         }
 
         private static Result CheckInterval(ITimer timer, int intervalMs)
@@ -73,7 +74,7 @@ namespace Common
             var max = deltas.Max();
             var average = deltas.Average();
 
-            var areaSize = Math.Max(1, intervalMs * GoodAreaPercents / 100);
+            var areaSize = intervalMs * GoodAreaPercents / 100;
 
             double GetPercent(Func<long, bool> selector) =>
                 deltas.Count(selector) / (double)deltas.Count * 100;
@@ -81,7 +82,8 @@ namespace Common
             var minPercent = GetPercent(d => d == min);
             var maxPercent = GetPercent(d => d == max);
             var goodPercent = GetPercent(d => d >= intervalMs - areaSize && d <= intervalMs + areaSize);
-            var badPercent = GetPercent(d => d > intervalMs + areaSize);
+            var aboveGoodPercent = GetPercent(d => d > intervalMs + areaSize);
+            var belowGoodPercent = GetPercent(d => d < intervalMs - areaSize);
 
             return new Result(
                 times.Count,
@@ -92,7 +94,8 @@ namespace Common
                 maxPercent,
                 average,
                 goodPercent,
-                badPercent);
+                aboveGoodPercent,
+                belowGoodPercent);
         }
     }
 }
