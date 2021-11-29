@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemTimersTimerWithPeriod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemThreadingTimerWithPeriod", "SystemThreadingTimerWithPeriod\SystemThreadingTimerWithPeriod.csproj", "{C478B8A6-EE57-4B88-BFE5-6C318B3948CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingTimerThread", "TimerQueueTimer\TimerQueueTimerUsingTimerThread.csproj", "{3B253649-739E-4197-934C-D851169413F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingTimerThread", "TimerQueueTimerUsingTimerThread\TimerQueueTimerUsingTimerThread.csproj", "{3B253649-739E-4197-934C-D851169413F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingTimerThreadWithPeriod", "TimerQueueTimerWithPeriod\TimerQueueTimerUsingTimerThreadWithPeriod.csproj", "{A84AA1CA-D08E-4CE0-82FF-D98784E33915}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingTimerThreadWithPeriod", "TimerQueueTimerUsingTimerThreadWithPeriod\TimerQueueTimerUsingTimerThreadWithPeriod.csproj", "{A84AA1CA-D08E-4CE0-82FF-D98784E33915}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerQueueTimerUsingDefault", "TimerQueueTimerUsingDefault\TimerQueueTimerUsingDefault.csproj", "{D0759963-D30D-4927-BF87-C812B4049E70}"
 EndProject
