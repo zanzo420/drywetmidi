@@ -16,7 +16,8 @@ namespace Common
             long Max,
             double MaxPercent,
             double Average,
-            double FivePercentsIntervalAreaPercent);
+            double GoodPercent,
+            double BadPercent);
 
         private const double GoodAreaPercents = 10.0;
         private static readonly TimeSpan MeasurementDuration = TimeSpan.FromSeconds(30);
@@ -35,7 +36,8 @@ namespace Common
                 Console.WriteLine($"    min     = {result.Min} ({result.MinPercent:0.##} %)");
                 Console.WriteLine($"    max     = {result.Max} ({result.MaxPercent:0.##} %)");
                 Console.WriteLine($"    average = {result.Average:0.##}");
-                Console.WriteLine($"    good    = {result.FivePercentsIntervalAreaPercent:0.##} %");
+                Console.WriteLine($"    good    = {result.GoodPercent:0.##} %");
+                Console.WriteLine($"    bad     = {result.BadPercent:0.##} %");
             }
 
             Console.WriteLine("Press any key to exit...");
@@ -71,17 +73,26 @@ namespace Common
             var max = deltas.Max();
             var average = deltas.Average();
 
-            var areaSize = intervalMs * GoodAreaPercents / 100;
+            var areaSize = Math.Max(1, intervalMs * GoodAreaPercents / 100);
+
+            double GetPercent(Func<long, bool> selector) =>
+                deltas.Count(selector) / (double)deltas.Count * 100;
+
+            var minPercent = GetPercent(d => d == min);
+            var maxPercent = GetPercent(d => d == max);
+            var goodPercent = GetPercent(d => d >= intervalMs - areaSize && d <= intervalMs + areaSize);
+            var badPercent = GetPercent(d => d > average);
 
             return new Result(
                 times.Count,
                 times[0],
                 min,
-                deltas.Count(d => d == min) / (double)deltas.Count * 100,
+                minPercent,
                 max,
-                deltas.Count(d => d == max) / (double)deltas.Count * 100,
+                maxPercent,
                 average,
-                deltas.Count(d => d >= intervalMs - areaSize && d <= intervalMs + areaSize) / (double)deltas.Count * 100);
+                goodPercent,
+                badPercent);
         }
     }
 }

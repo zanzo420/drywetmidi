@@ -3,21 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31829.152
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{6B098880-746B-4089-809D-E4CFA4B7E7CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{6B098880-746B-4089-809D-E4CFA4B7E7CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTimersTimer", "SystemTimersTimer\SystemTimersTimer.csproj", "{015666F2-F2F8-4001-9C97-6578480F542F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemTimersTimer", "SystemTimersTimer\SystemTimersTimer.csproj", "{015666F2-F2F8-4001-9C97-6578480F542F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemThreadingTimer", "SystemThreadingTimer\SystemThreadingTimer.csproj", "{7FBA87BE-E4A9-4CB4-BDEB-D60858907C38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemThreadingTimer", "SystemThreadingTimer\SystemThreadingTimer.csproj", "{7FBA87BE-E4A9-4CB4-BDEB-D60858907C38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinMmTimer", "WinMmTimer\WinMmTimer.csproj", "{321F862B-3494-4D10-ABE3-9ECEE76AFF90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinMmTimer", "WinMmTimer\WinMmTimer.csproj", "{321F862B-3494-4D10-ABE3-9ECEE76AFF90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTimersTimerWithPeriod", "SystemTimersTimerWithPeriod\SystemTimersTimerWithPeriod.csproj", "{D3934D61-C904-4461-8271-5D927D2DC32D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemTimersTimerWithPeriod", "SystemTimersTimerWithPeriod\SystemTimersTimerWithPeriod.csproj", "{D3934D61-C904-4461-8271-5D927D2DC32D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemThreadingTimerWithPeriod", "SystemThreadingTimerWithPeriod\SystemThreadingTimerWithPeriod.csproj", "{C478B8A6-EE57-4B88-BFE5-6C318B3948CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemThreadingTimerWithPeriod", "SystemThreadingTimerWithPeriod\SystemThreadingTimerWithPeriod.csproj", "{C478B8A6-EE57-4B88-BFE5-6C318B3948CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerQueueTimer", "TimerQueueTimer\TimerQueueTimer.csproj", "{3B253649-739E-4197-934C-D851169413F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingTimerThread", "TimerQueueTimer\TimerQueueTimerUsingTimerThread.csproj", "{3B253649-739E-4197-934C-D851169413F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerQueueTimerWithPeriod", "TimerQueueTimerWithPeriod\TimerQueueTimerWithPeriod.csproj", "{A84AA1CA-D08E-4CE0-82FF-D98784E33915}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingTimerThreadWithPeriod", "TimerQueueTimerWithPeriod\TimerQueueTimerUsingTimerThreadWithPeriod.csproj", "{A84AA1CA-D08E-4CE0-82FF-D98784E33915}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerQueueTimerUsingDefault", "TimerQueueTimerUsingDefault\TimerQueueTimerUsingDefault.csproj", "{D0759963-D30D-4927-BF87-C812B4049E70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerQueueTimerUsingDefaultWithPeriod", "TimerQueueTimerUsingDefaultWithPeriod\TimerQueueTimerUsingDefaultWithPeriod.csproj", "{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,14 @@ Global
 		{A84AA1CA-D08E-4CE0-82FF-D98784E33915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A84AA1CA-D08E-4CE0-82FF-D98784E33915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A84AA1CA-D08E-4CE0-82FF-D98784E33915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0759963-D30D-4927-BF87-C812B4049E70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0759963-D30D-4927-BF87-C812B4049E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0759963-D30D-4927-BF87-C812B4049E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0759963-D30D-4927-BF87-C812B4049E70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

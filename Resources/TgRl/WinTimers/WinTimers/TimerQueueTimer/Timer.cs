@@ -1,7 +1,7 @@
 ﻿using Common;
 using System;
 
-namespace TimerQueueTimer
+namespace TimerQueueTimerUsingTimerThread
 {
     internal sealed class Timer : ITimer
     {

@@ -14,6 +14,7 @@ namespace Common
 
         public const uint TIME_PERIODIC = 1;
         public const uint WT_EXECUTEINTIMERTHREAD = 0x00000020;
+        public const uint WT_EXECUTEDEFAULT = 0x00000000;
 
         public delegate void TimeProc(uint uID, uint uMsg, uint dwUser, uint dw1, uint dw2);
         public delegate void WaitOrTimerCallback(IntPtr lpParameter, bool TimerOrWaitFired);

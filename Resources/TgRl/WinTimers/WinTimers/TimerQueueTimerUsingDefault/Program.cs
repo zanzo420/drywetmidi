@@ -1,6 +1,6 @@
 ﻿using Common;
 
-namespace TimerQueueTimerUsingTimerThreadWithPeriod
+namespace TimerQueueTimerUsingDefault
 {
     class Program
     {

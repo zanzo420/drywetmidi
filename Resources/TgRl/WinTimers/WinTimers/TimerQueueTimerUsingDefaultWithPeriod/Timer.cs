@@ -1,7 +1,7 @@
 ﻿using Common;
 using System;
 
-namespace TimerQueueTimerUsingTimerThreadWithPeriod
+namespace TimerQueueTimerUsingDefaultWithPeriod
 {
     internal sealed class Timer : ITimer
     {
@@ -23,7 +23,7 @@ namespace TimerQueueTimerUsingTimerThreadWithPeriod
                 IntPtr.Zero,
                 (uint)intervalMs,
                 (uint)intervalMs,
-                NativeTimeApi.WT_EXECUTEINTIMERTHREAD);
+                NativeTimeApi.WT_EXECUTEDEFAULT);
         }
 
         public void Stop()
