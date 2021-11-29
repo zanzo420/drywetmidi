@@ -21,7 +21,7 @@ namespace Common
             double BelowGood);
 
         private const double GoodAreaPercents = 10.0;
-        private static readonly TimeSpan MeasurementDuration = TimeSpan.FromSeconds(30);
+        private static readonly TimeSpan MeasurementDuration = TimeSpan.FromMinutes(3);
         private static readonly int[] IntervalsToCheck = { 1, 10, 100 };
 
         public static void Check(ITimer timer)
