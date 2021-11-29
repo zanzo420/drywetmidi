@@ -81,7 +81,7 @@ namespace Common
             var minPercent = GetPercent(d => d == min);
             var maxPercent = GetPercent(d => d == max);
             var goodPercent = GetPercent(d => d >= intervalMs - areaSize && d <= intervalMs + areaSize);
-            var badPercent = GetPercent(d => d > average);
+            var badPercent = GetPercent(d => d > intervalMs + areaSize);
 
             return new Result(
                 times.Count,
