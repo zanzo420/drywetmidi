@@ -18,6 +18,7 @@ namespace Common
             double Average,
             double GoodPercent,
             double AboveGood,
+            double AverageAboveGood,
             double BelowGood);
 
         private const double GoodAreaPercents = 10.0;
@@ -38,7 +39,7 @@ namespace Common
                 Console.WriteLine($"    max        = {result.Max} ({result.MaxPercent:0.##} %)");
                 Console.WriteLine($"    average    = {result.Average:0.##}");
                 Console.WriteLine($"    good       = {result.GoodPercent:0.##} %");
-                Console.WriteLine($"    above good = {result.AboveGood:0.##} %");
+                Console.WriteLine($"    above good = {result.AboveGood:0.##} % (average {result.AverageAboveGood:0.##})");
                 Console.WriteLine($"    below good = {result.BelowGood:0.##} %");
             }
 
@@ -85,6 +86,8 @@ namespace Common
             var aboveGoodPercent = GetPercent(d => d > intervalMs + areaSize);
             var belowGoodPercent = GetPercent(d => d < intervalMs - areaSize);
 
+            var averageAboveGood = deltas.Where(d => d > intervalMs + areaSize).Average();
+
             return new Result(
                 times.Count,
                 times[0],
@@ -95,6 +98,7 @@ namespace Common
                 average,
                 goodPercent,
                 aboveGoodPercent,
+                averageAboveGood,
                 belowGoodPercent);
         }
     }
