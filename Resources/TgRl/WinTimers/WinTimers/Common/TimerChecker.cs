@@ -75,7 +75,7 @@ namespace Common
             var max = deltas.Max();
             var average = deltas.Average();
 
-            var areaSize = intervalMs * GoodAreaPercents / 100;
+            var areaSize = 5;
 
             double GetPercent(Func<long, bool> selector) =>
                 deltas.Count(selector) / (double)deltas.Count * 100;
