@@ -18,7 +18,7 @@ namespace Common
             double Average,
             double GoodPercent,
             double AboveGood,
-            double AverageAboveGood,
+            double? AverageAboveGood,
             double BelowGood);
 
         private const double GoodAreaPercents = 10.0;
@@ -86,7 +86,8 @@ namespace Common
             var aboveGoodPercent = GetPercent(d => d > intervalMs + areaSize);
             var belowGoodPercent = GetPercent(d => d < intervalMs - areaSize);
 
-            var averageAboveGood = deltas.Where(d => d > intervalMs + areaSize).Average();
+            var aboveGood = deltas.Where(d => d > intervalMs + areaSize).ToArray();
+            var averageAboveGood = aboveGood.Any() ? (double?)aboveGood.Average() : null;
 
             return new Result(
                 times.Count,
