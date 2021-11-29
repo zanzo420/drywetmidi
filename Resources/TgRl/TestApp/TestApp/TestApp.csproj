@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\WinTimers\WinTimers\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="tgrl.dylib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
