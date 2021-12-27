@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31829.152
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{6B098880-746B-4089-809D-E4CFA4B7E7CC}"
 EndProject
@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingTimerTh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingTimerThreadWithPeriod", "TimerQueueTimerUsingTimerThreadWithPeriod\TimerQueueTimerUsingTimerThreadWithPeriod.csproj", "{A84AA1CA-D08E-4CE0-82FF-D98784E33915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerQueueTimerUsingDefault", "TimerQueueTimerUsingDefault\TimerQueueTimerUsingDefault.csproj", "{D0759963-D30D-4927-BF87-C812B4049E70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingDefault", "TimerQueueTimerUsingDefault\TimerQueueTimerUsingDefault.csproj", "{D0759963-D30D-4927-BF87-C812B4049E70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerQueueTimerUsingDefaultWithPeriod", "TimerQueueTimerUsingDefaultWithPeriod\TimerQueueTimerUsingDefaultWithPeriod.csproj", "{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerQueueTimerUsingDefaultWithPeriod", "TimerQueueTimerUsingDefaultWithPeriod\TimerQueueTimerUsingDefaultWithPeriod.csproj", "{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniteLoopTimer", "InfiniteLoopTimer\InfiniteLoopTimer.csproj", "{6303F757-6EEE-4156-83A8-C7EA1DB446B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE8F69CC-2EFD-48CD-B89E-04AF1A54A1E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6303F757-6EEE-4156-83A8-C7EA1DB446B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6303F757-6EEE-4156-83A8-C7EA1DB446B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6303F757-6EEE-4156-83A8-C7EA1DB446B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6303F757-6EEE-4156-83A8-C7EA1DB446B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

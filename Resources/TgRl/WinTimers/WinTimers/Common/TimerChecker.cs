@@ -18,15 +18,17 @@ namespace Common
             double Average,
             double GoodPercent,
             double AboveGood,
-            double? AverageAboveGood,
-            double BelowGood);
+            double? AverageAboveGood);
 
-        private const double GoodAreaPercents = 10.0;
         private static readonly TimeSpan MeasurementDuration = TimeSpan.FromMinutes(3);
         private static readonly int[] IntervalsToCheck = { 1, 10, 100 };
 
         public static void Check(ITimer timer)
         {
+            Console.WriteLine("Starting measuring...");
+            Console.WriteLine($"OS: {Environment.OSVersion}");
+            Console.WriteLine("--------------------------------");
+
             foreach (var intervalMs in IntervalsToCheck)
             {
                 Console.WriteLine($"Measuring interval of {intervalMs} ms...");
@@ -40,7 +42,6 @@ namespace Common
                 Console.WriteLine($"    average    = {result.Average:0.##}");
                 Console.WriteLine($"    good       = {result.GoodPercent:0.##} %");
                 Console.WriteLine($"    above good = {result.AboveGood:0.##} % (average {result.AverageAboveGood:0.##})");
-                Console.WriteLine($"    below good = {result.BelowGood:0.##} %");
             }
 
             Console.WriteLine("All done.");
@@ -75,18 +76,16 @@ namespace Common
             var max = deltas.Max();
             var average = deltas.Average();
 
-            var areaSize = 5;
+            var goodAreaSize = 5;
 
             double GetPercent(Func<long, bool> selector) =>
                 deltas.Count(selector) / (double)deltas.Count * 100;
 
             var minPercent = GetPercent(d => d == min);
             var maxPercent = GetPercent(d => d == max);
-            var goodPercent = GetPercent(d => d >= intervalMs - areaSize && d <= intervalMs + areaSize);
-            var aboveGoodPercent = GetPercent(d => d > intervalMs + areaSize);
-            var belowGoodPercent = GetPercent(d => d < intervalMs - areaSize);
-
-            var aboveGood = deltas.Where(d => d > intervalMs + areaSize).ToArray();
+            var goodPercent = GetPercent(d => d >= intervalMs - goodAreaSize && d <= intervalMs + goodAreaSize);
+            var aboveGoodPercent = GetPercent(d => d > intervalMs + goodAreaSize);
+            var aboveGood = deltas.Where(d => d > intervalMs + goodAreaSize).ToArray();
             var averageAboveGood = aboveGood.Any() ? (double?)aboveGood.Average() : null;
 
             return new Result(
@@ -99,8 +98,7 @@ namespace Common
                 average,
                 goodPercent,
                 aboveGoodPercent,
-                averageAboveGood,
-                belowGoodPercent);
+                averageAboveGood);
         }
     }
 }
