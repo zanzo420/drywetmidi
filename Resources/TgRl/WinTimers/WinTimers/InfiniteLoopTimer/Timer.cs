@@ -1,6 +1,7 @@
 ﻿using Common;
 using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace InfiniteLoopTimer
 {
@@ -10,20 +11,25 @@ namespace InfiniteLoopTimer
 
         public void Start(int intervalMs, Action callback)
         {
-            var lastTime = 0L;
-            var stopwatch = new Stopwatch();
-
-            _running = true;
-            stopwatch.Start();
-
-            while (_running)
+            var thread = new Thread(() =>
             {
-                if (stopwatch.ElapsedMilliseconds - lastTime < intervalMs)
-                    continue;
+                var lastTime = 0L;
+                var stopwatch = new Stopwatch();
 
-                callback();
-                lastTime = stopwatch.ElapsedMilliseconds;
-            }
+                _running = true;
+                stopwatch.Start();
+
+                while (_running)
+                {
+                    if (stopwatch.ElapsedMilliseconds - lastTime < intervalMs)
+                        continue;
+
+                    callback();
+                    lastTime = stopwatch.ElapsedMilliseconds;
+                }
+            });
+
+            thread.Start();
         }
 
         public void Stop()
