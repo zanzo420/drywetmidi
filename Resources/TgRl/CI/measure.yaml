@@ -18,13 +18,6 @@ jobs:
         Resources/TgRl/WinTimers/WinTimers/${{ parameters.project }}/${{ parameters.project }}.csproj
   
   - task: PowerShell@2
-    displayName: Script
-    inputs:
-      targetType: 'inline'
-      script: |
-        Get-ChildItem -Path $(Build.SourcesDirectory)\*.txt -Recurse -Force
-  
-  - task: PowerShell@2
     displayName: Collect deltas
     inputs:
       targetType: 'inline'
