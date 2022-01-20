@@ -29,12 +29,12 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        New-Item -Path "$(Pipeline.Workspace)" -Name "Deltas" -ItemType "directory"
-        Copy-Item -Path "$(Build.SourcesDirectory)/deltas_1.txt" -Destination "$(Pipeline.Workspace)/Deltas"
+        New-Item -Path "$(Build.SourcesDirectory)" -Name "Deltas" -ItemType "directory"
+        Copy-Item -Path "$(Build.SourcesDirectory)/deltas_*.txt" -Destination "$(Build.SourcesDirectory)/Deltas"
         
   - task: PublishPipelineArtifact@1
     displayName: Publish 'Deltas' artifact
     inputs:
-      targetPath: '$(Build.SourcesDirectory)/deltas_1.txt'
+      targetPath: '$(Build.SourcesDirectory)/Deltas'
       artifactName: 'Deltas_${{ parameters.project }}'
       artifactType: pipeline
