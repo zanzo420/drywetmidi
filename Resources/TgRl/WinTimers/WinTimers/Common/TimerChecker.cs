@@ -19,7 +19,7 @@ namespace Common
             double AboveGood,
             double? AverageAboveGood);
 
-        private static readonly TimeSpan MeasurementDuration = TimeSpan.FromMinutes(3);
+        private static readonly TimeSpan MeasurementDuration = TimeSpan.FromSeconds(5);
         private static readonly int[] IntervalsToCheck = { 1/*, 10, 100*/ };
 
         private const int GoodAreaSize = 5;
