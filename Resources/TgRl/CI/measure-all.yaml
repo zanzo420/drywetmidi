@@ -2,9 +2,6 @@ trigger: none
 
 name: WinTimersMeasureAll_$(Rev:.r)
 
-pool:
-  vmImage: 'windows-latest'
-
 jobs:
 - template: measure.yaml
   parameters:

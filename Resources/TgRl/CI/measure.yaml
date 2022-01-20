@@ -3,26 +3,31 @@ parameters:
   displayName: 'Project'
   type: string
 
-steps:
-- task: DotNetCoreCLI@2
+jobs:
+- job: ${{ parameters.project }}
   displayName: Run measurements
-  inputs:
-    command: 'run'
-    arguments: '--configuration Release'
-    projects: |
-      Resources/TgRl/WinTimers/WinTimers/${{ parameters.project }}/${{ parameters.project }}.csproj
-      
-- task: PowerShell@2
-  displayName: Collect deltas
-  inputs:
-    targetType: 'inline'
-    script: |
-      New-Item -Path "$(Pipeline.Workspace)" -Name "Deltas" -ItemType "directory"
-      Copy-Item -Path "Resources/TgRl/WinTimers/WinTimers/${{ parameters.project }}" -Filter "deltas.txt" -Destination "$(Pipeline.Workspace)/Deltas" –Recurse
-      
-- task: PublishPipelineArtifact@1
-  displayName: Publish 'Deltas' artifact
-  inputs:
-    targetPath: '$(Pipeline.Workspace)/Deltas'
-    artifactName: 'Deltas_${{ parameters.project }}'
-    artifactType: pipeline
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: Run measurements
+    inputs:
+      command: 'run'
+      arguments: '--configuration Release'
+      projects: |
+        Resources/TgRl/WinTimers/WinTimers/${{ parameters.project }}/${{ parameters.project }}.csproj
+        
+  - task: PowerShell@2
+    displayName: Collect deltas
+    inputs:
+      targetType: 'inline'
+      script: |
+        New-Item -Path "$(Pipeline.Workspace)" -Name "Deltas" -ItemType "directory"
+        Copy-Item -Path "Resources/TgRl/WinTimers/WinTimers/${{ parameters.project }}" -Filter "deltas.txt" -Destination "$(Pipeline.Workspace)/Deltas" –Recurse
+        
+  - task: PublishPipelineArtifact@1
+    displayName: Publish 'Deltas' artifact
+    inputs:
+      targetPath: '$(Pipeline.Workspace)/Deltas'
+      artifactName: 'Deltas_${{ parameters.project }}'
+      artifactType: pipeline
