@@ -5,7 +5,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.project }}
-  displayName: Run measurements
+  displayName: Run measurements for ${{ parameters.project }}
   pool:
     vmImage: 'windows-latest'
   steps:
