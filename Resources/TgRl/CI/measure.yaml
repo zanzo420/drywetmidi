@@ -5,7 +5,7 @@ parameters:
 
 steps:
 - task: DotNetCoreCLI@2
-  displayName: Build DryWetMidi and DryWetMidi.Tests.Common
+  displayName: Run measurements
   inputs:
     command: 'run'
     arguments: '--configuration Release'
