@@ -64,7 +64,7 @@ namespace Common
             var deltas = new List<long>();
             var lastTime = 0L;
 
-            foreach (var time in times)
+            foreach (var time in times.ToArray())
             {
                 var delta = time - lastTime;
                 deltas.Add(delta);
