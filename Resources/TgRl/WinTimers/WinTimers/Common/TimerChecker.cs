@@ -71,7 +71,7 @@ namespace Common
                 lastTime = time;
             }
 
-            File.WriteAllLines("deltas.txt", deltas.Select(d => d.ToString()));
+            File.WriteAllLines($"deltas_{intervalMs}.txt", deltas.Select(d => d.ToString()));
 
             var min = deltas.Min();
             var max = deltas.Max();

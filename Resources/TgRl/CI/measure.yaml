@@ -23,7 +23,7 @@ jobs:
       targetType: 'inline'
       script: |
         New-Item -Path "$(Pipeline.Workspace)" -Name "Deltas" -ItemType "directory"
-        Copy-Item -Path "Resources/TgRl/WinTimers/WinTimers/${{ parameters.project }}" -Filter "deltas.txt" -Destination "$(Pipeline.Workspace)/Deltas" –Recurse
+        Copy-Item -Path "Resources/TgRl/WinTimers/WinTimers/${{ parameters.project }}" -Filter "deltas_*.txt" -Destination "$(Pipeline.Workspace)/Deltas" –Recurse
         
   - task: PublishPipelineArtifact@1
     displayName: Publish 'Deltas' artifact
