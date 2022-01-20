@@ -1,0 +1,28 @@
+parameters:
+- name: project
+  displayName: 'Project'
+  type: string
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Build DryWetMidi and DryWetMidi.Tests.Common
+  inputs:
+    command: 'run'
+    arguments: '--configuration Release'
+    projects: |
+      Resources/TgRl/WinTimers/WinTimers/${{ parameters.project }}/${{ parameters.project }}.csproj
+      
+- task: PowerShell@2
+  displayName: Collect deltas
+  inputs:
+    targetType: 'inline'
+    script: |
+      New-Item -Path "$(Pipeline.Workspace)" -Name "Deltas" -ItemType "directory"
+      Copy-Item -Path "Resources/TgRl/WinTimers/WinTimers/${{ parameters.project }}" -Filter "deltas.txt" -Destination "$(Pipeline.Workspace)/Deltas" –Recurse
+      
+- task: PublishPipelineArtifact@1
+  displayName: Publish 'Deltas' artifact
+  inputs:
+    targetPath: '$(Pipeline.Workspace)/Deltas'
+    artifactName: 'Deltas_${{ parameters.project }}'
+    artifactType: pipeline

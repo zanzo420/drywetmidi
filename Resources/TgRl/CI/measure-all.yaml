@@ -1,0 +1,38 @@
+trigger: none
+
+name: WinTimersMeasureAll_$(Rev:.r)
+
+pool:
+  vmImage: 'windows-latest'
+
+jobs:
+- template: measure.yaml
+  parameters:
+    project: 'InfiniteLoopTimer'
+- template: measure.yaml
+  parameters:
+    project: 'SystemThreadingTimer'
+- template: measure.yaml
+  parameters:
+    project: 'SystemThreadingTimerWithPeriod'
+- template: measure.yaml
+  parameters:
+    project: 'SystemTimersTimer'
+- template: measure.yaml
+  parameters:
+    project: 'SystemTimersTimerWithPeriod'
+- template: measure.yaml
+  parameters:
+    project: 'TimerQueueTimerUsingDefault'
+- template: measure.yaml
+  parameters:
+    project: 'TimerQueueTimerUsingDefaultWithPeriod'
+- template: measure.yaml
+  parameters:
+    project: 'TimerQueueTimerUsingTimerThread'
+- template: measure.yaml
+  parameters:
+    project: 'TimerQueueTimerUsingTimerThreadWithPeriod'
+- template: measure.yaml
+  parameters:
+    project: 'WinMmTimer'

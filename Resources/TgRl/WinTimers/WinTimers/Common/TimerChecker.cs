@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -69,6 +70,8 @@ namespace Common
                 deltas.Add(delta);
                 lastTime = time;
             }
+
+            File.WriteAllLines("deltas.txt", deltas.Select(d => d.ToString()));
 
             var min = deltas.Min();
             var max = deltas.Max();
