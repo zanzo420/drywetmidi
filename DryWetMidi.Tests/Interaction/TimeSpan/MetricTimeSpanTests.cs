@@ -75,6 +75,134 @@ namespace Melanchall.DryWetMidi.Tests.Interaction
             new object[] { "3 s 4 mS", new MetricTimeSpan(0, 0, 3, 4) },
         };
 
+        private const double DoubleEpsilon = 0.0000001;
+
+        private static readonly object[] Parameters_CheckTotalMicroseconds_FromTimeSpan =
+        {
+            new object[] { new TimeSpan(0, 0, 0), 0 },
+            new object[] { new TimeSpan(0, 0, 1), 1 * 1000 * 1000 },
+            new object[] { new TimeSpan(0, 1, 0), 1 * 60 * 1000 * 1000 },
+            new object[] { new TimeSpan(0, 0, 0, 0, 1), 1 * 1000 },
+            new object[] { new TimeSpan(1, 0, 0, 0, 1), 1L * 24 * 60 * 60 * 1000 * 1000 + 1 * 1000 },
+            new object[] { new TimeSpan(0, 2, 0, 1, 0), 2L * 60 * 60 * 1000 * 1000 + 1 * 1000 * 1000 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalMicroseconds_FromFields =
+        {
+            new object[] { new MetricTimeSpan(0), 0 },
+            new object[] { new MetricTimeSpan(0, 0, 0), 0 },
+            new object[] { new MetricTimeSpan(0, 0, 1), 1 * 1000 * 1000 },
+            new object[] { new MetricTimeSpan(0, 1, 0), 1 * 60 * 1000 * 1000 },
+            new object[] { new MetricTimeSpan(0, 0, 0, 1), 1 * 1000 },
+            new object[] { new MetricTimeSpan(1, 0, 0, 1), 1L * 60 * 60 * 1000 * 1000 + 1 * 1000 },
+            new object[] { new MetricTimeSpan(1, 0, 60, 1), 1L * 60 * 60 * 1000 * 1000 + 60 * 1000 * 1000 + 1 * 1000 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalMilliseconds_FromTimeSpan =
+        {
+            new object[] { new TimeSpan(0, 0, 0), 0 },
+            new object[] { new TimeSpan(0, 0, 1), 1 * 1000 },
+            new object[] { new TimeSpan(0, 1, 0), 1 * 60 * 1000 },
+            new object[] { new TimeSpan(0, 0, 0, 0, 1), 1 },
+            new object[] { new TimeSpan(1, 0, 2, 0, 3), 1 * 24 * 60 * 60 * 1000 + 2 * 60 * 1000 + 3 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalMilliseconds_FromFields =
+        {
+            new object[] { new MetricTimeSpan(0), 0 },
+            new object[] { new MetricTimeSpan(500), 0.5 },
+            new object[] { new MetricTimeSpan(0, 0, 0), 0 },
+            new object[] { new MetricTimeSpan(0, 0, 1), 1 * 1000 },
+            new object[] { new MetricTimeSpan(0, 1, 0), 1 * 60 * 1000 },
+            new object[] { new MetricTimeSpan(0, 0, 0, 1), 1 },
+            new object[] { new MetricTimeSpan(1, 2, 3, 4), 1 * 60 * 60 * 1000 + 2 * 60 * 1000 + 3 * 1000 + 4 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalSeconds_FromTimeSpan =
+        {
+            new object[] { new TimeSpan(0, 0, 0), 0 },
+            new object[] { new TimeSpan(0, 0, 1), 1 },
+            new object[] { new TimeSpan(0, 1, 0), 1 * 60 },
+            new object[] { new TimeSpan(0, 0, 0, 0, 1), 1.0 / 1000 },
+            new object[] { new TimeSpan(0, 1, 0, 0, 1), 1 * 60 * 60 + 1.0 / 1000 },
+            new object[] { new TimeSpan(0, 0, 1, 2, 3), 1 * 60 + 2 + 3.0 / 1000 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalSeconds_FromFields =
+        {
+            new object[] { new MetricTimeSpan(0), 0 },
+            new object[] { new MetricTimeSpan(500), 0.5 / 1000 },
+            new object[] { new MetricTimeSpan(0, 0, 0), 0 },
+            new object[] { new MetricTimeSpan(0, 0, 1), 1 },
+            new object[] { new MetricTimeSpan(0, 1, 0), 1 * 60 },
+            new object[] { new MetricTimeSpan(0, 0, 0, 1), 1.0 / 1000 },
+            new object[] { new MetricTimeSpan(1, 2, 3, 4), 1 * 60 * 60 + 2 * 60 + 3 + 4.0 / 1000 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalMinutes_FromTimeSpan =
+        {
+            new object[] { new TimeSpan(0, 0, 0), 0 },
+            new object[] { new TimeSpan(0, 0, 30), 30.0 / 60 },
+            new object[] { new TimeSpan(0, 1, 0), 1 },
+            new object[] { new TimeSpan(0, 0, 0, 0, 60), 60.0 / 1000 / 60  },
+            new object[] { new TimeSpan(1, 2, 3, 0, 60), 1 * 24 * 60 + 2 * 60 + 3 + 60.0 / 1000 / 60  },
+        };
+
+        private static readonly object[] Parameters_CheckTotalMinutes_FromFields =
+        {
+            new object[] { new MetricTimeSpan(0), 0 },
+            new object[] { new MetricTimeSpan(500), 500.0 / 1000 / 1000 / 60 },
+            new object[] { new MetricTimeSpan(0, 0, 0), 0 },
+            new object[] { new MetricTimeSpan(0, 0, 30), 30.0 / 60 },
+            new object[] { new MetricTimeSpan(0, 1, 0), 1 },
+            new object[] { new MetricTimeSpan(0, 0, 0, 60), 60.0 / 1000 / 60 },
+            new object[] { new MetricTimeSpan(1, 2, 3, 4), 1 * 60 + 2 + 3.0 / 60 + 4.0 / 1000 / 60 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalHours_FromTimeSpan =
+        {
+            new object[] { new TimeSpan(0, 0, 0), 0 },
+            new object[] { new TimeSpan(1, 0, 0), 1 },
+            new object[] { new TimeSpan(0, 0, 1800), 1800.0 / 60 / 60 },
+            new object[] { new TimeSpan(0, 30, 0), 30.0 / 60 },
+            new object[] { new TimeSpan(0, 0, 0, 0, 360), 360.0 / 1000 / 60 / 60 },
+            new object[] { new TimeSpan(1, 2, 3, 0, 4), 1 * 24 + 2 + 3.0 / 60 + 4.0 / 1000 / 60 / 60 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalHours_FromFields =
+        {
+            new object[] { new MetricTimeSpan(0), 0 },
+            new object[] { new MetricTimeSpan(100), 100.0 / 1000 / 1000 / 60 / 60 },
+            new object[] { new MetricTimeSpan(0, 0, 0), 0 },
+            new object[] { new MetricTimeSpan(0, 0, 1800), 1800.0 / 60 / 60 },
+            new object[] { new MetricTimeSpan(0, 60, 0), 1 },
+            new object[] { new MetricTimeSpan(1, 0, 0), 1 },
+            new object[] { new MetricTimeSpan(0, 0, 0, 360), 360.0 / 1000 / 60 / 60 },
+            new object[] { new MetricTimeSpan(1, 2, 3, 4), 1 + 2.0 / 60 + 3.0 / 60 / 60 + 4.0 / 1000 / 60 / 60 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalDays_FromTimeSpan =
+        {
+            new object[] { new TimeSpan(0, 0, 0), 0 },
+            new object[] { new TimeSpan(12, 0, 0), 12.0 / 24 },
+            new object[] { new TimeSpan(0, 0, 1800), 1800.0 / 60 / 60 / 24 },
+            new object[] { new TimeSpan(0, 30, 0), 30.0 / 60 / 24 },
+            new object[] { new TimeSpan(0, 0, 0, 0, 360), 360.0 / 1000 / 60 / 60 / 24 },
+            new object[] { new TimeSpan(0, 2, 0, 3), 2.0 / 24 + 3.0 / 60 / 60 / 24 },
+        };
+
+        private static readonly object[] Parameters_CheckTotalDays_FromFields =
+        {
+            new object[] { new MetricTimeSpan(0), 0 },
+            new object[] { new MetricTimeSpan(1000), 1000.0 / 1000 / 1000 / 60 / 60 / 24 },
+            new object[] { new MetricTimeSpan(0, 0, 0), 0 },
+            new object[] { new MetricTimeSpan(0, 0, 1800), 1800.0 / 60 / 60 / 24 },
+            new object[] { new MetricTimeSpan(0, 60, 0), 60.0 / 60 / 24 },
+            new object[] { new MetricTimeSpan(1, 0, 0), 1.0 / 24 },
+            new object[] { new MetricTimeSpan(0, 0, 0, 360), 360.0 / 1000 / 60 / 60 / 24 },
+            new object[] { new MetricTimeSpan(1, 2, 3, 4), 1.0 / 24 + 2.0 / 60 / 24 + 3.0 / 60 / 60 / 24 + 4.0 / 1000 / 60 / 60 / 24 },
+        };
+
         #endregion
 
         #region Test methods
@@ -1065,6 +1193,95 @@ namespace Melanchall.DryWetMidi.Tests.Interaction
             Assert.AreEqual(0.5, new MetricTimeSpan(0, 0, 2).Divide(new MetricTimeSpan(0, 0, 4)));
 
             Assert.Throws<DivideByZeroException>(() => new MetricTimeSpan().Divide(new MetricTimeSpan()));
+        }
+
+        #endregion
+
+        #region Properties
+
+        [Test]
+        public void CheckTotalMicroseconds_FromTotalMicroseconds([Values(0, 100)] long totalMicroseconds)
+        {
+            var metricTimeSpan = new MetricTimeSpan(totalMicroseconds);
+            Assert.AreEqual(totalMicroseconds, metricTimeSpan.TotalMicroseconds, "Total microseconds value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalMicroseconds_FromTimeSpan))]
+        public void CheckTotalMicroseconds_FromTimeSpan(TimeSpan timeSpan, long expectedTotalMicroseconds)
+        {
+            var metricTimeSpan = new MetricTimeSpan(timeSpan);
+            Assert.AreEqual(expectedTotalMicroseconds, metricTimeSpan.TotalMicroseconds, "Total microseconds value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalMicroseconds_FromFields))]
+        public void CheckTotalMicroseconds_FromFields(MetricTimeSpan timeSpan, long expectedTotalMicroseconds)
+        {
+            Assert.AreEqual(expectedTotalMicroseconds, timeSpan.TotalMicroseconds, "Total microseconds value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalMilliseconds_FromTimeSpan))]
+        public void CheckTotalMilliseconds_FromTimeSpan(TimeSpan timeSpan, double expectedTotalMilliseconds)
+        {
+            var metricTimeSpan = new MetricTimeSpan(timeSpan);
+            Assert.AreEqual(expectedTotalMilliseconds, metricTimeSpan.TotalMilliseconds, DoubleEpsilon, "Total milliseconds value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalMilliseconds_FromFields))]
+        public void CheckTotalMilliseconds_FromFields(MetricTimeSpan timeSpan, double expectedTotalMilliseconds)
+        {
+            Assert.AreEqual(expectedTotalMilliseconds, timeSpan.TotalMilliseconds, DoubleEpsilon, "Total milliseconds value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalSeconds_FromTimeSpan))]
+        public void CheckTotalSeconds_FromTimeSpan(TimeSpan timeSpan, double expectedTotalSeconds)
+        {
+            var metricTimeSpan = new MetricTimeSpan(timeSpan);
+            Assert.AreEqual(expectedTotalSeconds, metricTimeSpan.TotalSeconds, DoubleEpsilon, "Total seconds value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalSeconds_FromFields))]
+        public void CheckTotalSeconds_FromFields(MetricTimeSpan timeSpan, double expectedTotalSeconds)
+        {
+            Assert.AreEqual(expectedTotalSeconds, timeSpan.TotalSeconds, DoubleEpsilon, "Total seconds value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalMinutes_FromTimeSpan))]
+        public void CheckTotalMinutes_FromTimeSpan(TimeSpan timeSpan, double expectedTotalMinutes)
+        {
+            var metricTimeSpan = new MetricTimeSpan(timeSpan);
+            Assert.AreEqual(expectedTotalMinutes, metricTimeSpan.TotalMinutes, DoubleEpsilon, "Total minutes value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalMinutes_FromFields))]
+        public void CheckTotalMinutes_FromFields(MetricTimeSpan timeSpan, double expectedTotalMinutes)
+        {
+            Assert.AreEqual(expectedTotalMinutes, timeSpan.TotalMinutes, DoubleEpsilon, "Total minutes value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalHours_FromTimeSpan))]
+        public void CheckTotalHours_FromTimeSpan(TimeSpan timeSpan, double expectedTotalHours)
+        {
+            var metricTimeSpan = new MetricTimeSpan(timeSpan);
+            Assert.AreEqual(expectedTotalHours, metricTimeSpan.TotalHours, DoubleEpsilon, "Total hours value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalHours_FromFields))]
+        public void CheckTotalHours_FromFields(MetricTimeSpan timeSpan, double expectedTotalHours)
+        {
+            Assert.AreEqual(expectedTotalHours, timeSpan.TotalHours, DoubleEpsilon, "Total hours value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalDays_FromTimeSpan))]
+        public void CheckTotalDays_FromTimeSpan(TimeSpan timeSpan, double expectedTotalDays)
+        {
+            var metricTimeSpan = new MetricTimeSpan(timeSpan);
+            Assert.AreEqual(expectedTotalDays, metricTimeSpan.TotalDays, DoubleEpsilon, "Total days value is invalid.");
+        }
+
+        [TestCaseSource(nameof(Parameters_CheckTotalDays_FromFields))]
+        public void CheckTotalDays_FromFields(MetricTimeSpan timeSpan, double expectedTotalDays)
+        {
+            Assert.AreEqual(expectedTotalDays, timeSpan.TotalDays, DoubleEpsilon, "Total days value is invalid.");
         }
 
         #endregion
